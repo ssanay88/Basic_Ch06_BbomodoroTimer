@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/ppllo/AndroidStudioProjects/Basic_Ch06_BbomodoroTimer/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/ppllo/AndroidStudioProjects/Basic_Ch06_BbomodoroTimer/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.290625" />
+        <entry key="..\:/Users/ppllo/AndroidStudioProjects/Basic_Ch06_BbomodoroTimer/app/src/main/res/drawable/drawable_tick_mark.xml" value="0.290625" />
+        <entry key="..\:/Users/ppllo/AndroidStudioProjects/Basic_Ch06_BbomodoroTimer/app/src/main/res/drawable/ic_baseline_unfold_less_24.xml" value="0.290625" />
+        <entry key="..\:/Users/ppllo/AndroidStudioProjects/Basic_Ch06_BbomodoroTimer/app/src/main/res/drawable/ic_thumb.xml" value="0.290625" />
+        <entry key="..\:/Users/ppllo/AndroidStudioProjects/Basic_Ch06_BbomodoroTimer/app/src/main/res/layout/activity_main.xml" value="0.176" />
       </map>
     </option>
   </component>

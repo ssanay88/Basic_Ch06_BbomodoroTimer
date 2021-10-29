@@ -6,12 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_img_tomato_stem"
+        app:layout_constraintBottom_toTopOf="@id/remainMinutesTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/remainMinutesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00"
-        android:textSize="40sp"
+        android:text="00'"
+        android:textColor="@color/white"
+        android:textSize="120sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/remainSecondsTextView"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -23,17 +34,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="@id/remainMinutesTextView"
+        android:textColor="@color/white"
+        android:textSize="70sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/remainMinutesTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/remainMinutesTextView"
-        app:layout_constraintTop_toTopOf="@id/remainMinutesTextView" />
+        app:layout_constraintStart_toEndOf="@id/remainMinutesTextView" />
 
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
         android:max="60"
+        android:progressDrawable="@color/transparent"
+        android:thumb="@drawable/ic_thumb"
+        android:tickMark="@drawable/drawable_tick_mark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,3 +57,12 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!--
+    앱 시작 시 액티비티의 백그라운드 색을 입혔지만 흰색 배경이였다가 설정한 액티비티로 보이는 이유
+    -> 액티비티는 윈도우 위에 얹히는 것이므로 기존 흰색 배경인 윈도우가 먼저 불러오고 inflate를 통해 액티비티가
+    입혀지는 과정에서 해당 상황 발생
+    해결 방법 ) 액티비티의 배경색을 바꾸는 것이 아닌 themes.xml에 가서 윈도우의 배경 색을 직접 설정
+
+    -->
