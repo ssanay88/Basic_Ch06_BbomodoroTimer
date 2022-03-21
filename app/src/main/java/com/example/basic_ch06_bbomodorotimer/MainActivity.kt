@@ -9,17 +9,17 @@ import com.example.basic_ch06_bbomodorotimer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mainBinding: ActivityMainBinding
+    lateinit var mainBinding: ActivityMainBinding     // 뷰바인딩
 
-    // 카운트 다운 타이머가 작동하고 있는 경우 현재의 카운트다운타이머를 저장할 변수수
-    private var currentCountDownTimer : CountDownTimer? = null
+    // 카운트 다운 타이머가 작동하고 있는 경우 현재의 카운트다운타이머를 저장할 변수
+    private var currentCountDownTimer : CountDownTimer? = null    // 카운트 다운 타이머 객체
 
     // 사운드풀 사용을 위한 선언
-    private val soundPool = SoundPool.Builder().build()
+    private val soundPool = SoundPool.Builder().build()    // 사운드풀 객체 생성
 
     // 사운드 풀에서 로드된 Id를 담을 변수들
-    private var tickingSoundId: Int? = null
-    private var bellSoundId: Int? = null
+    private var tickingSoundId: Int? = null    // 똑딱 소리
+    private var bellSoundId: Int? = null    // 알람 소리
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -50,31 +50,35 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun bindView() {
+        // seekBar에 대한 이벤트 리스너
         mainBinding.seekBar.setOnSeekBarChangeListener(
 
+            // SeekBar 변경 익명 객체
             object : SeekBar.OnSeekBarChangeListener {
 
+                // 진행도가 변경되는 경우
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     if (fromUser) {
-                        updateRemainTime(progress * 60 * 1000L)
+                        updateRemainTime(progress * 60 * 1000L)    // 해당하는 시간으로 UI 업데이트
                     }
                 }
 
+                // SeekBar를 움직이기 시작하는 경우
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
 
-                    stopCountDown()
+                    stopCountDown()    // 카운트 다운을 멈춘다
 
                 }
 
                 // SeekBar를 조절하다가 멈출 때 카운트 다운 시작
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
 
-                    seekBar ?: return
+                    seekBar ?: return    // SeekBar가 null일 경우 그냥 탈출
 
                     if (mainBinding.seekBar.progress == 0) {
-                        stopCountDown()
+                        stopCountDown()    // 실행이 종료된 경우
                     } else {
-                        startCountDown()
+                        startCountDown()    // 설정한 기준으로 카운트다운 시작
                     }
 
                 }
@@ -83,34 +87,36 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-
+    // 사운드 관련해서 선언
     private fun initSounds() {
         tickingSoundId = soundPool.load(this , R.raw.timer_ticking , 1)    //
         bellSoundId = soundPool.load(this , R.raw.timer_bell , 1)
     }
 
-
-
+    // 카운트 다운 타이머를 생성
     private fun createCountDownTimer(initialMillis:Long) =
-        // CountDownTimer 생성 즉시 반환하는 코드
+        // CountDownTimer 생성 즉시 반환하는 코드 , 익명 객체
         object: CountDownTimer(initialMillis, 1000L) {
 
-            override fun onTick(millisUntilFinished: Long) {
+            // 줄어들때마다 실행
+           override fun onTick(millisUntilFinished: Long) {
 
                 // 매 1초마다 UI 갱신해야 함
-                updateRemainTime(millisUntilFinished)
-                updateSeekBar(millisUntilFinished)
+                updateRemainTime(millisUntilFinished)    // 남은 시간에 대한 UI 업데이트
+                updateSeekBar(millisUntilFinished)    // 남은 시간에 대한 SeekBar 업데이트
 
             }
 
+            // 카운트 다운이 종료될 경우
             override fun onFinish() {
 
-                completeCountDown()
+                completeCountDown()    // 카운트 다운 종료
 
             }
-        }.start()
+        }.start()    // CountDownTimer 실행
 
 
+    // 남은 시간에 대한 UI 업데이트
     private fun updateRemainTime(remainMillis:Long) {
 
         val remainSeconds = remainMillis / 1000    // 밀리초 단위로 받아온 수를 초단위로 바꿔 준다
@@ -121,14 +127,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateSeekBar(remainMillis: Long) {
 
-        mainBinding.seekBar.progress = (remainMillis / 1000 / 60).toInt()
+        mainBinding.seekBar.progress = (remainMillis / 1000 / 60).toInt()    // 진행도를 업데이트
 
     }
 
+    // 타이머를 생성 및 시작
     private fun startCountDown() {
         // seekbar에서 설정한 분을 밀리초로 변환
         currentCountDownTimer = createCountDownTimer(mainBinding.seekBar.progress * 60 * 1000L)
-        currentCountDownTimer?.start()
+        currentCountDownTimer?.start()    // 카운트다운타이머가 null이 아닐 경우 시작
 
         // tickingSoundId가 null이 아닐 경우 let 호출
         tickingSoundId?.let { soundId ->
@@ -136,14 +143,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // 타이머 종료
     private fun stopCountDown() {
         currentCountDownTimer?.cancel()    // 현재 진행하고 있는 카운트 다운이 null이 아닐경우 취소
         currentCountDownTimer = null    // 다시 초기화
 
-        soundPool.autoPause()
+        soundPool.autoPause()    // 소리도 정지
 
     }
 
+    // 카운트 다운 종료 시 실행
     private fun completeCountDown() {
 
         updateRemainTime(0)
